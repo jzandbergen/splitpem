@@ -11,6 +11,13 @@ import (
 
 var file = "clientchain.pem"
 
+func camelCasifinatifier(s string) (r string) {
+	for _, i := range strings.Split(s, " ") {
+		r += strings.Title(i)
+	}
+	return
+}
+
 func main() {
 
 	// Read the file into "bytes".
@@ -37,9 +44,7 @@ func main() {
 			log.Fatal(err)
 		}
 
-		outputFilename := strings.ToLower(
-			strings.ReplaceAll(cert.Subject.CommonName, " ", "_"),
-		) + ".pem"
+		outputFilename := camelCasifinatifier(cert.Subject.CommonName) + ".pem"
 
 		f, err := os.Create("output/" + outputFilename)
 		if err != nil {
